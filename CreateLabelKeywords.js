@@ -53,20 +53,6 @@ function isHoliday(s) {
   return false;
 }
 
-/**
- * Returns true if this string is considered to be a non-brand keyword, otherwise returns false
- */
-function isNonBrand(s) {
-  if (!s) {
-    return false;
-  }
-    if (s.toLowerCase().indexOf(HOLIDAY_NAMES[i].toLowerCase()) = -1) {
-      if (s.toLowerCase().indexOf(HOLIDAY_NAMES[i].toLowerCase()) = -1)	{
-		  return true;
-	  }
-    }
-  return false;
-}
   
 // function to label keywords as holiday
 function labelHolidayKeywords() {
@@ -108,7 +94,7 @@ function labelNonBrandedKeywords() {
   while (keywordIterator.hasNext()) {
     var keyword = keywordIterator.next();
     //check if keyword is brand by using isBrand() function
-    if (isNonBrand(keyword.getText())) {
+    if( (!isBrand(keyword.getText()) && (!isHoliday(keyword.getText())))) {
       keyword.applyLabel('nonbrand-keyword');
     }
   }
