@@ -1,15 +1,19 @@
 // Keywords with our brand name are "branded" keywords
 // we also label holiday keywords so we can manage those uniquely
+// we also are creating a way to label non-brand keywords as well
+// we do this by assuming any keywords not labeled as branded or holiday are you basic nonbranded keywords
 
 var BRAND_NAMES = ['posty' ];
 var HOLIDAY_NAMES = ['holiday', 'christmas'];
+var NON_BRANDED_NAMES = [ ] ;
 
 function main() {
-  //we comment out this createLabels() function since we already ran it...
+  //we comment out this createLabels() function since we only need to use it when creating labels
   //createLabels();
 
   labelHolidayKeywords();
   labelBrandedKeywords();
+  labelNonBrandedKeywords();
 
 }
 
@@ -49,6 +53,20 @@ function isHoliday(s) {
   return false;
 }
 
+/**
+ * Returns true if this string is considered to be a non-brand keyword, otherwise returns false
+ */
+function isNonBrand(s) {
+  if (!s) {
+    return false;
+  }
+    if (s.toLowerCase().indexOf(HOLIDAY_NAMES[i].toLowerCase()) = -1) {
+      if (s.toLowerCase().indexOf(HOLIDAY_NAMES[i].toLowerCase()) = -1)	{
+		  return true;
+	  }
+    }
+  return false;
+}
   
 // function to label keywords as holiday
 function labelHolidayKeywords() {
@@ -77,6 +95,21 @@ function labelBrandedKeywords() {
     //check if keyword is brand by using isBrand() function
     if (isBrand(keyword.getText())) {
       keyword.applyLabel('brand-keyword');
+    }
+  }
+}
+
+// function to label keywords as non-branded
+function labelNonBrandedKeywords() {
+  var keywordSelector = AdWordsApp.keywords()
+      .withCondition("CampaignStatus = ENABLED")
+      .withCondition("AdGroupStatus = ENABLED")
+  var keywordIterator = keywordSelector.get();  
+  while (keywordIterator.hasNext()) {
+    var keyword = keywordIterator.next();
+    //check if keyword is brand by using isBrand() function
+    if (isNonBrand(keyword.getText())) {
+      keyword.applyLabel('nonbrand-keyword');
     }
   }
 }
