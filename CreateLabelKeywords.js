@@ -92,7 +92,10 @@ function labelBrandedKeywords() {
     var keyword = keywordIterator.next();
     //check if keyword is brand by using isBrand() function
     if (isBrand(keyword.getText())) {
-      keyword.applyLabel('brand-keyword');
+		//if not already labeled as brand keyword, then label it as such
+	  if (!hasLabel(keyword,'brand-keyword'))	{
+      	keyword.applyLabel('brand-keyword');
+	  }
     }
   }
 }
@@ -107,7 +110,10 @@ function labelNonBrandedKeywords() {
     var keyword = keywordIterator.next();
     //check if keyword is brand by using isBrand() function
     if( (!isBrand(keyword.getText()) && (!isHoliday(keyword.getText())))) {
-      keyword.applyLabel('nonbrand-keyword');
+      //if not already labeled as non-brand keyword, then label it as such
+	  	if (!hasLabel(keyword,'nonbrand-keyword'))	{
+	  		keyword.applyLabel('nonbrand-keyword');
+		}
     }
   }
 }
