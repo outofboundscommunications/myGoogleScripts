@@ -3,6 +3,9 @@
 // we also are creating a way to label non-brand keywords as well
 // we do this by assuming any keywords not labeled as branded or holiday are you basic nonbranded keywords
 
+//what we want to do now is get this script to run on a scheduled basis and update new keywords with
+//labels and skip already labeled keywords
+
 var BRAND_NAMES = ['posty' ];
 var HOLIDAY_NAMES = ['holiday', 'christmas'];
 var NON_BRANDED_NAMES = [ ] ;
@@ -53,6 +56,12 @@ function isHoliday(s) {
   return false;
 }
 
+/**
+ * Returns true if the keyword already has this label applied.
+ */
+function hasLabel(keyword, label) {
+  return keyword.labels().withCondition("Name = '" + label + "'").get().hasNext();
+}
   
 // function to label keywords as holiday
 function labelHolidayKeywords() {
@@ -64,7 +73,10 @@ function labelHolidayKeywords() {
     var keyword = keywordIterator.next();
     //check if keyword is holiday by using isHoliday() function
     if (isHoliday(keyword.getText())) {
-      keyword.applyLabel('holiday-keyword');
+      //if not already labeled as holiday keyword, then label it as such
+	  if (!hasLabel(keyword,'holiday-keyword'))	{
+	  	keyword.applyLabel('holiday-keyword');
+	  }
     }
   }
 }
