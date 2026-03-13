@@ -1,4 +1,7 @@
-.clasprc.json
+# Clasp / Apps Script config
+.clasp.json
 node_modules/
-.venv/
-*.log
+build/
+
+# Mac system files
+.DS_Store
