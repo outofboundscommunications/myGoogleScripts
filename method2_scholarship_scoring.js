@@ -1,21 +1,21 @@
 /*******************************************************
  * PMC Method 2 — Score scholarship candidates
- * and build Method2_Outreach top 3 URLs per school.
+ * and build Scholarship_Page_Top3_IPEDS (top 3 URLs per school).
  *
  * INPUT SHEETS
  * - SERP_results_IPEDS_norm
  * - SCHOOLS_raw_IPEDS
  *
  * OUTPUT SHEETS
- * - Scholarship_Page_Candidates_IPEDS
- * - Method2_Outreach
+ * Scholarship_Page_Candidates_IPEDS
+ * Scholarship_Page_Top3_IPEDS
  *******************************************************/
 
 const CFG = {
   serpNormSheet: 'SERP_results_IPEDS_norm',
   schoolsSheet: 'SCHOOLS_raw_IPEDS',
-  candidatesSheet: 'Scholarship_Page_Top3_IPEDS',
-  outreachSheet: 'Scholarship_Page_Candidates_IPEDS',
+  candidatesSheet: 'Scholarship_Page_Candidates_IPEDS',
+  outreachSheet: 'Scholarship_Page_Top3_IPEDS',
 };
 
 function onOpen() {
@@ -25,7 +25,7 @@ function onOpen() {
       SpreadsheetApp.getUi()
         .createMenu('Method 2')
         .addItem('Score scholarship candidates', 'scoreScholarshipCandidates')
-        .addItem('Build Method2_Outreach (Top 3)', 'buildMethod2OutreachTop3')
+        .addItem('Build Scholarship_Page_Top3_IPEDS', 'buildMethod2OutreachTop3')
         .addItem('Run both Method 2 steps', 'runMethod2Top3Pipeline')
     )
     .addToUi();
@@ -33,7 +33,7 @@ function onOpen() {
 
 function runMethod2Top3Pipeline() {
   scoreScholarshipCandidates();
-  buildMethod2OutreachTop3();
+  buildScholarshipPageTop3();
   SpreadsheetApp.getUi().alert('Method 2 pipeline complete.');
 }
 
@@ -161,9 +161,9 @@ function scoreScholarshipCandidates() {
  * Step 2:
  * Read Scholarship_Page_Candidates_IPEDS and SCHOOLS_raw_IPEDS
  * Keep top 3 URLs per UNITID
- * Write final outreach rows to Method2_Outreach
+ * Write final top-3 rows to Scholarship_Page_Top3_IPEDS
  */
-function buildMethod2OutreachTop3() {
+function buildScholarshipPageTop3() {
   const ss = SpreadsheetApp.getActive();
 
   const candSh = ss.getSheetByName(CFG.candidatesSheet);
@@ -334,7 +334,7 @@ function buildMethod2OutreachTop3() {
     ]);
   }
 
-  const outSheet = getOrCreateSheet_(ss, CFG.candidatesSheet);
+  const outSheet = getOrCreateSheet_(ss, CFG.outreachSheet);
 
   outSheet.clearContents();
   outSheet.getRange(1, 1, 1, outHeaders.length).setValues([outHeaders]);
