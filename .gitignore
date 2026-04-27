@@ -1,7 +1,13 @@
-# Clasp / Apps Script config
+# Google Apps Script / Clasp
 .clasp.json
 node_modules/
-build/
 
-# Mac system files
+# Python Virtual Env
+.venv/
+bin/
+lib/
+include/
+pyvenv.cfg
+
+# OS files
 .DS_Store
